@@ -3,10 +3,10 @@ const express = require("express")
 const router = express.Router();
 
 //Routes
-router.get("/create-or-update-user", (req, res) => {
+router.get("/user", (req, res) => {
   req.body;
   res.json({
-    data: "Hey you hit Create or update user API endpoint",
+    data: "Hey you hit user API endpoint",
   });
 });
 

@@ -4,11 +4,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const {readdirSync} = require("fs");
 dotenv.config();
-
-//import routes
-const authRoutes = require("./routes/auth");
-
 
 
 //app
@@ -33,7 +30,11 @@ app.use(bodyParser.json({}));
 app.use(cors());
 
 //Routes middleware
-app.use("/api", authRoutes)
+// app.use("/api", authRoutes)
+
+readdirSync("./routes").map((route)=>{
+  app.use("/api", require("./routes/" + route))
+})
 
 //Port
 const port = process.env.PORT;
