@@ -6,6 +6,11 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 
+//import routes
+const authRoutes = require("./routes/auth");
+
+
+
 //app
 const app = express();
 
@@ -27,13 +32,8 @@ app.use(morgan("dev"));
 app.use(bodyParser.json({}));
 app.use(cors());
 
-//Routes
-app.get("/api", (req, res) => {
-  req.body;
-  res.json({
-    data: "Hey you hit node API updated!!",
-  });
-});
+//Routes middleware
+app.use("/api", authRoutes)
 
 //Port
 const port = process.env.PORT;
