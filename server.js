@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const {readdirSync} = require("fs");
+const dotenv = require("dotenv"); 
 dotenv.config();
 
 
