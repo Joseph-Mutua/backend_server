@@ -9,7 +9,6 @@ exports.create = async (req, res) => {
       slug: slugify(name).toLowerCase(),
     }).save();
     res.json(category);
-    
   } catch (err) {
     console.log(err);
     res.status(400).send("Create category failed");
@@ -17,25 +16,39 @@ exports.create = async (req, res) => {
 };
 
 exports.list = async (req, res) => {
-  try {
-  } catch (err) {}
+  res.json(await Category.find({}).sort({ createdAt: -1 }).exec());
   //
 };
 
 exports.read = async (req, res) => {
-  try {
-  } catch (err) {}
+  let category = await Category.findOne({ slug: req.params.slug }).exec();
+  res.json(category);
   //
 };
 
 exports.update = async (req, res) => {
+  const { name } = req.body;
+
   try {
-  } catch (err) {}
+    const updated = await Category.findOneAndUpdate(
+      { slug: req.params.slug },
+      { name, slug: slugify(name) },
+      { new: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Category update failed!");
+  }
   //
 };
 
 exports.remove = async (req, res) => {
   try {
-  } catch (err) {}
-  //
+    const deleted = await Category.findOneAndDelete({ slug: req.params.slug });
+    res.json(deleted);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("Category delete failed!");
+  }
 };
