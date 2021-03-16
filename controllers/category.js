@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
     }).save();
     res.json(category);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     res.status(400).send("Create category failed");
   }
 };
