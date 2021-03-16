@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
-
 const categorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
       trim: true,
       required: true,
-      minlength: [3, "Too short!"],
+      minlength: [2, "Too short!"],
       maxlength: [32, "Too long"],
     },
     slug: {
@@ -20,4 +19,4 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Category", categorySchema)
+module.exports = mongoose.model("Category", categorySchema);
