@@ -3,14 +3,15 @@ const slugify = require("slugify");
 
 exports.create = async (req, res) => {
   try {
-    const { name } = req.body;
-    const category = await new SubCategory({
+    const { name, parent } = req.body;
+    const subcategory = await new SubCategory({
       name,
+      parent,
       slug: slugify(name).toLowerCase(),
     }).save();
     res.json(subcategory);
   } catch (err) {
-    console.log(err.message);
+    console.log("SUB CATEGORY CREATE ERROR", err.message);
     res.status(400).send("Create subcategory failed");
   }
 };
@@ -45,7 +46,9 @@ exports.update = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
-    const deleted = await SubCategory.findOneAndDelete({ slug: req.params.slug });
+    const deleted = await SubCategory.findOneAndDelete({
+      slug: req.params.slug,
+    });
     res.json(deleted);
   } catch (err) {
     console.log(err);
