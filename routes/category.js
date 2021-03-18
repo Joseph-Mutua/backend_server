@@ -1,7 +1,5 @@
 const express = require("express");
-
 const router = express.Router();
-const { createOrUpdateUser, currentUser } = require("../controllers/auth");
 
 //Middleware
 const { authCheck, adminCheck } = require("../middleware/auth");
