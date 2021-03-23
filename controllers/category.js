@@ -60,5 +60,6 @@ exports.getSubCategories = (req, res) => {
   SubCategory.find({parent: req.params._id}).exec((err, subs) => {
     if(err) console.log(err);
     res.json(subs)
+    console.log(subs)
   });
 }
