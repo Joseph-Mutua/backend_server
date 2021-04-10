@@ -10,6 +10,6 @@ const {uploadImages, removeImages} = require("../controllers/cloudinary");
 
 //Routes
 router.post("/uploadimages", authCheck, adminCheck, uploadImages);
-router.post("/removeimages", authCheck, adminCheck, removeImages)
+router.post("/removeimage", authCheck, adminCheck, removeImages)
 
 module.exports = router;
