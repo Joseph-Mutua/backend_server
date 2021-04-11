@@ -38,3 +38,27 @@ exports.remove = async (req, res) => {
     return res.status(400).send("Product delete failed!");
   }
 };
+
+exports.read = async (req, res) => {
+  const product = await Product.findOne({ slug: req.params.slug })
+    .populate("category")
+    .populate("subcategories")
+    .exec();
+  res.json(product);
+};
+
+exports.update = async (req, res) => {
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      {
+        slug: req.params.slug,
+      },
+      req.body,
+      { new: true } //To send the recently updated product as the response
+    );
+    res.json(updatedProduct);
+  } catch (err) {
+    console.log("PRODUCT UPDATE ERROR", err);
+    return res.status(400).send("Product update failed!");
+  }
+};
