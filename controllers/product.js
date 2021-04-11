@@ -13,17 +13,28 @@ exports.create = async (req, res) => {
 
     res.status(400).json({
       err: err.message,
-
-    })
+    });
   }
 };
 
 exports.listAll = async (req, res) => {
   let products = await Product.find({})
-  .limit(parseInt(req.params.count))
-  .populate("category")
-  .populate("subcategories")
-  .sort([["createdAt", "desc"]])
-  .exec();
+    .limit(parseInt(req.params.count))
+    .populate("category")
+    .populate("subcategories")
+    .sort([["createdAt", "desc"]])
+    .exec();
   res.json(products);
-}
+};
+
+exports.remove = async (req, res) => {
+  try {
+    const deletedProduct = await Product.findOneAndRemove({
+      slug: req.params.slug,
+    }).exec();
+    res.json(deletedProduct);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("Product delete failed!");
+  }
+};
