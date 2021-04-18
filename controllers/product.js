@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
@@ -119,10 +120,10 @@ exports.productStar = async (req, res) => {
   //Who is updating
   //Check if currently logged in user have already addded rating to this product
   let existingRatingObject = product.ratings.find(
-    (r) => r.postedBy === user._id.toString()
+    (r) => r.postedBy.toString() === user._id.toString()
   );
 
-  //If user havent left rating yet, push it
+  //If user hasn't left rating yet, push it
   if (existingRatingObject === undefined) {
     let ratingAdded = await Product.findByIdAndUpdate(
       product._id,
@@ -131,18 +132,34 @@ exports.productStar = async (req, res) => {
       },
       { new: true }
     ).exec();
-    console.log("ratingAdded", ratingAdded);
+    console.log("ratingAdded :", ratingAdded);
   } else {
-    
     //If user has a rating already, update it
     const updatedRating = await Product.updateOne(
       {
-        ratings: { $elementMatch: existingRatingObject },
+        ratings: { $elemMatch: existingRatingObject },
       },
       { $set: { "ratings.$.star": star } },
       { new: true }
     ).exec();
-    console.log("ratingUpdated", ratingUpdated);
-    res.json(ratingUpdated);
+
+    console.log("ratingUpdated", updatedRating);
+    res.json(updatedRating);
   }
+};
+
+exports.listRelated = async (req, res) => {
+  const product = await Product.findById(req.params.productId).exec();
+
+  const related = await Product.find({
+    _id: { $ne: product._id },
+    category: product.category,
+  })
+    .limit(3)
+    .populate("category")
+    .populate("subcategories")
+    .populate("postedBy")
+    .exec();
+
+  res.json(related);
 };
