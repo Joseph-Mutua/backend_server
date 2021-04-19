@@ -228,6 +228,14 @@ const handleStar = (req, res, stars) => {
     });
 };
 
+const handleSubCategory = async (req, res, subcategory) => {
+  const products = await Product.find({ subcategories: subcategory })
+    .populate("Category", "_id name")
+    .populate("subcategories", "_id name")
+    .exec();
+  res.json(products);
+};
+
 exports.searchFilters = async (req, res) => {
   const { query, price, category, stars } = req.body;
 
@@ -250,5 +258,10 @@ exports.searchFilters = async (req, res) => {
   if (stars) {
     console.log("Stars", stars);
     await handleStar(req, res, stars);
+  }
+
+  if (subcategory) {
+    console.log("SubCategory", subcategory);
+    await handleSubCategory(req, res, subcategory);
   }
 };
