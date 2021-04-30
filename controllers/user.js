@@ -171,7 +171,7 @@ exports.orders = async (req, res) => {
 };
 
 exports.addToWishlist = async (req, res) => {
-  const { productId } = req.body;
+  const { productId } = req.params;
 
   const user = await User.findOneAndUpdate(
     { email: req.user.email },

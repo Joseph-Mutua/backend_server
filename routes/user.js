@@ -8,7 +8,10 @@ const {
   saveUserAddress,
   applyCouponToUserCart,
   createOrder,
-  orders
+  orders,
+  addToWishlist,
+  wishlist,
+  removeFromWishlist
 } = require("../controllers/user");
 
 const router = express.Router();
