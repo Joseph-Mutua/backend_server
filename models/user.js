@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
         default: [],
     },
     address: String,
-    // wishlist: [{type: objectId, ref:"Product"}]
+    wishlist: [{type: objectId, ref:"Product"}]
 }, {timestamps: true})
 
 module.exports = mongoose.model("User", userSchema);
