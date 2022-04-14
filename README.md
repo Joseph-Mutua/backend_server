@@ -2,7 +2,7 @@
 
 This is the code for the server side of the MERN Stack E-commerce application, built with NodeJS.
 
-The client side of the App can be found on this (link)[https://github.com/Joseph-Mutua/front_client]
+The client side of the App can be found on this [link](https://github.com/Joseph-Mutua/front_client)
 
 ## Installation
 
